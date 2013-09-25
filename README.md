@@ -1,4 +1,5 @@
-teq-overlay-plugin
+Teq-overlay-plugin
 ==================
 
-Overlay plugin for teq
+Usage 
+------------------
