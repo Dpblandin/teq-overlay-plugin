@@ -31,7 +31,8 @@
 				top      : 0,
 				right    : 0,
 				cursor   : "pointer"
-			}
+			},
+			closeBtnHtml: "x"
 		};
 
 		var methods = {
@@ -143,7 +144,7 @@
 					$('<div/>')
 					.attr(settings.closeBtnAttrs)
 					.css(settings.closeBtnCSS)
-					.html('x')
+					.html(settings.closeBtnHtml)
 					.prependTo(settings.contentContainer)
 					.bind("click", function(e){
 						e.preventDefault();
