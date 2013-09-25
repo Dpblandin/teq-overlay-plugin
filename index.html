@@ -12,7 +12,7 @@
 
         <link rel="stylesheet" href="css/teq-overlay.css" />
 
-	   <!-- <script src="//code.jquery.com/jquery-1.10.2.min.js"></script> !-->
+	   <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
      <script> !window.jQuery && document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>'); </script>
 
    	</head>
@@ -33,13 +33,14 @@
 	 <script src="js/overlay-0.1.js"></script>
 
    <script>
-    $(document).teqOverlay({
-      onInit: function(){
+    $('a[data-overlay]').teqOverlay({
+      onInitCB: function(){
         console.log("Overloaded CB - onInit called");
       },
       overlayCSS:{},
       overlayTransition : {},
-      contentContainer: $('.overlay-content')
+      contentContainer: $('.overlay-content'),
+      addCloseBtn : true
     });
    </script>
 </html>

@@ -17,115 +17,157 @@
 				height    : $(window).height(),
 				zIndex    : 9999999
 			},
-			overlayFrom        : $('a[data-overlay]'),
 			overlayTransition  : {
 				type: "show", 
 				duration: 0
 			},
 			contentContainer : $('div.overlay-content'),
+			addCloseBtn: false,
+			closeBtnAttrs:{
+				ID: 'overlay-close'
+			},
+			closeBtnCSS: {
+				position: "absolute",
+				top      : 0,
+				right    : 0,
+				cursor   : "pointer"
+			}
+		};
 
-			onInit: function(){
+		var methods = {
+
+
+			onInitCB: function(){
 
 			},
 
-			onShow: function(){
+			onShowCB: function(){
 
 			},
 
-			onComplete: function(){
+			onCompleteCB: function(){
 
 			},
 
-			init: function(){
+			afterContentLoadCB: function(){
+
+			},
+
+			init: function(element){
 				/* find elements to be overlaid */
-				
+				var done = false;
 				//find if overlayFrom param is a simple string or a selector
-				
-				if(typeof this.overlayFrom == 'string' || this.overlayFrom instanceof String){
 
-					this.overlayFrom = $(this.overlayFrom);
-					
+				if(typeof settings.contentContainer == 'string' || settings.contentContainer instanceof String){
+					settings.contentContainer = $(settings.contentContainer);
 				}
 
-				if(typeof this.contentContainer == 'string' || this.contentContainer instanceof String){
-					this.contentContainer = $(this.contentContainer);
-				}
-
-				if(this.contentContainer.length == 0)
+				if(settings.contentContainer.length == 0)
 				{
-					window.console.log && console.log("Error : jQuery couldn't find the content container specified with the selector you used ("+this.contentContainer.selector+')');
+					window.console.log && console.log("Error : jQuery couldn't find the content container specified with the selector you used ("+settings.contentContainer.selector+')');
 					return false;
 				}
 
-				if(this.overlayFrom.length > 0){
+				if(element.length > 0){
 
-					this.addOverlayToStage();
-					this.bindClickEvents(this.overlayFrom, this.overlayClose);
+					methods.addOverlayToStage();
+					methods.bindClickEvents(element, settings.overlayClose);
+					done = !done;
 				}
 				else{
-					window.console.log && console.log("Error : jQuery couldn't find the element specified with the selector you used ("+this.overlayFrom.selector+')');
+					window.console.log && console.log("Error : jQuery couldn't find the element specified with the selector you used ("+element.selector+')');
 					return false;
 				}
+
+				done ? settings.onInitCB() : '';
 			},
 
 			addOverlayToStage: function(){
 				window.console.log && console.log('Adding overlay to stage...');
 				
-				this.contentContainer.wrap(
-					$('<div/>')
-					.attr(this.overlayAttrs)
-					.css(this.overlayCSS)
-				);
-
+				if($("#"+settings.overlayAttrs.ID).length == 0)
+				{
+					settings.contentContainer.wrap(
+						$('<div/>')
+						.attr(settings.overlayAttrs)
+						.css(settings.overlayCSS)
+					);
+	
+				}
+			
 				window.console.log && console.log('------------DONE---------------');
 			},
 
-			bindClickEvents: function(links, closeElement){
+			bindClickEvents: function(element, closeElement){
 				window.console.log && console.log('binding click events...');
-				var that = this;
-				links.each(function() {
-					var link = $(this);
 
-					link.bind("click", function(e) {
-						e.preventDefault();
+				element.bind("click", function(e) {
+					e.preventDefault();
+					
+					/* Show or transition overlay */
+					switch (settings.overlayTransition.type) {
+
+						case "fadeIn":
+							$('div#'+settings.overlayAttrs.ID).fadeIn(settings.overlayTransition.duration);
+						break;
+
+						default:
+							$('div#'+settings.overlayAttrs.ID).show();
+						break;
 						
-						/* Show or transition overlay */
-						switch (that.overlayTransition.type) {
+					}
 
-							case "fadeIn":
-								$('div#'+that.overlayAttrs.ID).fadeIn(that.overlayTransition.duration);
-							break;
+					/* load content for overlay */
 
-							default:
-								$('div#'+that.overlayAttrs.ID).show();
-							break;
-							
-						}
-
-						/* load content for overlay */
-
-						that.loadOverlayContent(link.attr('href'));
-									
-					});
+					methods.loadOverlayContent(element.attr('href'));
+								
 				});
 				window.console.log && console.log('------------DONE---------------');
 			},
 
 			loadOverlayContent: function( hrefLink ) {
-				window.console.log("loading content...");
-				this.contentContainer.load(hrefLink);
+				window.console.log && console.log("loading content...");
+				settings.contentContainer.load(hrefLink, function(){
+					if(settings.addCloseBtn){
+					methods.addCloseButton();
+					} 
+				}).show();
+				
+				window.console.log && console.log('------------DONE---------------');
+			},
+
+			addCloseButton: function() {
+				window.console.log && console.log("adding close btn...");
+				if($("#"+settings.closeBtnAttrs.ID).length == 0 ){
+
+					$('<div/>')
+					.attr(settings.closeBtnAttrs)
+					.css(settings.closeBtnCSS)
+					.html('x')
+					.prependTo(settings.contentContainer)
+					.bind("click", function(e){
+						e.preventDefault();
+						$(this).parent().hide();
+						$("#"+settings.overlayAttrs.ID).hide();
+					});	
+					
+				}
 				window.console.log && console.log('------------DONE---------------');
 			}
+		
+
 		};
- 
-       	var settings = $.extend( true, {}, defaults, options );
 
-       	settings.init();
-
+ 		
+       
        	return this.each(function () {
 
        		var $this = $(this);
 
+       		settings = $.extend(true, {}, defaults, options );
+
+       		
+       		methods.init($this);
        		
        	});
 
