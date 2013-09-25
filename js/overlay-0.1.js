@@ -115,13 +115,6 @@
 				console.log("loading content...");
 				this.contentContainer.load(hrefLink);
 				console.log('------------DONE---------------');
-			},
-
-			initOverlays: function( overlay ){
-				console.log('plugin init done');
-				settings.onInit.call( this );
-
-				console.log( overlay );
 			}
 		};
  
