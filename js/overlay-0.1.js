@@ -47,7 +47,15 @@
 					
 				}
 
-				console.log(this.overlayFrom);
+				if(typeof this.contentContainer == 'string' || this.contentContainer instanceof String){
+					this.contentContainer = $(this.contentContainer);
+				}
+
+				if(this.contentContainer.length == 0)
+				{
+					console.log("Error : jQuery couldn't find the content container specified with the selector you used ("+this.contentContainer.selector+')');
+					return false;
+				}
 
 				if(this.overlayFrom.length > 0){
 
@@ -63,7 +71,7 @@
 			addOverlayToStage: function(){
 				console.log('Adding overlay to stage...');
 				
-				$('.overlay-content').wrap(
+				this.contentContainer.wrap(
 					$('<div/>')
 					.attr(this.overlayAttrs)
 					.css(this.overlayCSS)
