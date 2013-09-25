@@ -113,7 +113,7 @@
 				element.bind("click", function(e) {
 					e.preventDefault();
 					
-					/* Show or transition overlay. Default behaviour is hide() */
+					/* Show or transition overlay. Default method is show() */
 					switch (settings.overlayTransition.type) {
 
 						case "fadeIn":
