@@ -25,7 +25,7 @@
 			contentContainer : $('div.overlay-content'),
 
 			onInit: function(){
-				console.log("Default CB - onInit called");
+
 			},
 
 			onShow: function(){
@@ -53,7 +53,7 @@
 
 				if(this.contentContainer.length == 0)
 				{
-					console.log("Error : jQuery couldn't find the content container specified with the selector you used ("+this.contentContainer.selector+')');
+					window.console.log && console.log("Error : jQuery couldn't find the content container specified with the selector you used ("+this.contentContainer.selector+')');
 					return false;
 				}
 
@@ -63,13 +63,13 @@
 					this.bindClickEvents(this.overlayFrom, this.overlayClose);
 				}
 				else{
-					console.log("Error : jQuery couldn't find the element specified with the selector you used ("+this.overlayFrom.selector+')');
+					window.console.log && console.log("Error : jQuery couldn't find the element specified with the selector you used ("+this.overlayFrom.selector+')');
 					return false;
 				}
 			},
 
 			addOverlayToStage: function(){
-				console.log('Adding overlay to stage...');
+				window.console.log && console.log('Adding overlay to stage...');
 				
 				this.contentContainer.wrap(
 					$('<div/>')
@@ -77,11 +77,11 @@
 					.css(this.overlayCSS)
 				);
 
-				console.log('------------DONE---------------');
+				window.console.log && console.log('------------DONE---------------');
 			},
 
 			bindClickEvents: function(links, closeElement){
-				console.log('binding click events...');
+				window.console.log && console.log('binding click events...');
 				var that = this;
 				links.each(function() {
 					var link = $(this);
@@ -108,13 +108,13 @@
 									
 					});
 				});
-				console.log('------------DONE---------------');
+				window.console.log && console.log('------------DONE---------------');
 			},
 
 			loadOverlayContent: function( hrefLink ) {
-				console.log("loading content...");
+				window.console.log("loading content...");
 				this.contentContainer.load(hrefLink);
-				console.log('------------DONE---------------');
+				window.console.log && console.log('------------DONE---------------');
 			}
 		};
  
