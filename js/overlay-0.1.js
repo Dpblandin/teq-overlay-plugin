@@ -138,16 +138,5 @@
 
 
     };
-
- 
-
-	$(document).teqOverlay({
-		onInit: function(){
-			console.log("Overloaded CB - onInit called");
-		},
-		overlayCSS:{},
-		overlayTransition : {},
-		contentContainer: $('.overlay-content')
-	});
  
 }( jQuery ));

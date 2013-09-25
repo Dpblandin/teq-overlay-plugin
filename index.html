@@ -31,4 +31,15 @@
    	</body>
 	
 	 <script src="js/overlay-0.1.js"></script>
+
+   <script>
+    $(document).teqOverlay({
+      onInit: function(){
+        console.log("Overloaded CB - onInit called");
+      },
+      overlayCSS:{},
+      overlayTransition : {},
+      contentContainer: $('.overlay-content')
+    });
+   </script>
 </html>
