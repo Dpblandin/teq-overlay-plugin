@@ -4,12 +4,12 @@
 
 		var defaults = {
 			overlayAttrs: {
-				id: 'overlay'
+				ID: 'overlay'
 			},
 			overlayCSS: {
-				display   : "block",
-				background: "#000",
-				opacity   : "0.5",
+				display   : "none",
+				background: "rgba(0,0,0,.5)",
+				opacity   : "1",
 				position  : "fixed",
 				top       : 0,
 				left      : 0,
@@ -17,8 +17,12 @@
 				height    : $(window).height(),
 				zIndex    : 9999999
 			},
-			overlayFrom: $('a[data-overlay]'),
-			overlayID  : "overlay",
+			overlayFrom        : $('a[data-overlay]'),
+			overlayTransition  : {
+				type: "show", 
+				duration: 0
+			},
+			contentContainer : $('div.overlay-content'),
 
 			onInit: function(){
 				console.log("Default CB - onInit called");
@@ -48,7 +52,7 @@
 				if(this.overlayFrom.length > 0){
 
 					this.addOverlayToStage();
-					this.bindClickEvents();
+					this.bindClickEvents(this.overlayFrom, this.overlayClose);
 				}
 				else{
 					console.log("Error : jQuery couldn't find the element specified with the selector you used ("+this.overlayFrom.selector+')');
@@ -57,14 +61,52 @@
 			},
 
 			addOverlayToStage: function(){
-				$('<div/>')
+				console.log('Adding overlay to stage...');
+				
+				$('.overlay-content').wrap(
+					$('<div/>')
 					.attr(this.overlayAttrs)
 					.css(this.overlayCSS)
-				.appendTo($('body'));
+				);
+
+				console.log('------------DONE---------------');
 			},
 
-			bindClickEvents: function(){
+			bindClickEvents: function(links, closeElement){
 				console.log('binding click events...');
+				var that = this;
+				links.each(function() {
+					var link = $(this);
+
+					link.bind("click", function(e) {
+						e.preventDefault();
+						
+						/* Show or transition overlay */
+						switch (that.overlayTransition.type) {
+
+							case "fadeIn":
+								$('div#'+that.overlayAttrs.ID).fadeIn(that.overlayTransition.duration);
+							break;
+
+							default:
+								$('div#'+that.overlayAttrs.ID).show();
+							break;
+							
+						}
+
+						/* load content for overlay */
+
+						that.loadOverlayContent(link.attr('href'));
+									
+					});
+				});
+				console.log('------------DONE---------------');
+			},
+
+			loadOverlayContent: function( hrefLink ) {
+				console.log("loading content...");
+				this.contentContainer.load(hrefLink);
+				console.log('------------DONE---------------');
 			},
 
 			initOverlays: function( overlay ){
@@ -95,8 +137,9 @@
 		onInit: function(){
 			console.log("Overloaded CB - onInit called");
 		},
-		overlayFrom: $('a'),
-		overlayCSS:{}
+		overlayCSS:{},
+		overlayTransition : {},
+		contentContainer: $('.overlay-content')
 	});
  
 }( jQuery ));
