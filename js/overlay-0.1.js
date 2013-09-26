@@ -125,7 +125,7 @@ var teqOverlay = {
 			
 				window.console.log && console.log('------------DONE---------------');
 			},
-			
+
 			/* Load overlay content into content container, checks wether to add a close button or not */
 			loadOverlayContent: function( hrefLink ) {
 				var this_instance = this;
@@ -142,7 +142,11 @@ var teqOverlay = {
 						if(this_instance.settings.addCloseBtn){
 							this_instance.addCloseButton();	
 						}
-						this_instance.addDocumentEventHandler(); 
+
+						if(this_instance.settings.closeFromOutside){
+							this_instance.addDocumentEventHandler(); 
+						}
+
 					});
 
 					if(typeof this_instance.settings.afterOpenCB == 'function') {
@@ -178,22 +182,21 @@ var teqOverlay = {
 
 			addDocumentEventHandler: function() {
 				var overlayContainer = $("#"+this.settings.overlayAttrs.ID);
-
-				if(this.settings.closeFromOutside){
-					$(document).bind("click.outsideClickEvent", this.outsideCloseHandler(overlayContainer));
+				$(document).bind("click.outsideClickEvent", this.outsideCloseHandler(overlayContainer));
 						
-				}
-				else{
-					$(document).unbind("click.outsideClickEvent");
-				}
+			},
+
+			removeDocumentEventHandler: function() {
+				$(document).unbind("click.outsideClickEvent");
 			},
 
 			outsideCloseHandler: function(overlayContainer){
+
 				var this_instance = this;
 				return function(e) {
 					e.stopPropagation();
 					e.preventDefault();
-					this_instance.hideElementWithTransition(overlayContainer);
+					this_instance.hideElementWithTransition(overlayContainer, this_instance.settings.closeTransition);
 				}
 			},
 			closeButtonHandler: function (overlayContainer){
@@ -201,28 +204,29 @@ var teqOverlay = {
 				return function(e) {
 					e.stopPropagation();
 					e.preventDefault();
-					this_instance.hideElementWithTransition(overlayContainer);
+					this_instance.hideElementWithTransition(overlayContainer, this_instance.settings.closeTransition);
 				}
 			},
 
 			/* Hides an element with specified transition effect */
-			hideElementWithTransition: function( element ){
-				switch (this.settings.closeTransition.type) {
+			hideElementWithTransition: function( element, transition ){
+				switch (transition.type) {
 
 						case "fadeOut":
-							element.fadeOut(this.settings.closeTransition.duration);
+							element.fadeOut(transition.duration);
 						break;
 
 						default:
 							element.hide();
 						break;
 						
-					}
+				}
+
+				this.removeDocumentEventHandler();
 			},
 
 			/* Shows overlay with specified transition effect */
 			showOverlayWithTransition: function ( element ){
-
 					switch (this.settings.overlayTransition.type) {
 
 						case "fadeIn":
