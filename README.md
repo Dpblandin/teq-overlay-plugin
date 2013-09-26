@@ -6,7 +6,7 @@ Usage
 
 Call the plugin with :
 
-`$([selector]).teqOverlay();`
+	$([selector]).teqOverlay();
 
 Optional Parameters
 -------------------
