@@ -2,15 +2,15 @@ var teqOverlay = {
 		/* CB (callback) methods */
 			onInitCB: function(){},
 
-			beforeOpenCB: function(){alert("beforeOpenCB -- Callback fired")},
+			beforeOpenCB: function(){},
 
-			onOpenCB: function(){alert("onOpenCB -- Callback fired")},
+			onOpenCB: function(){},
 
-			afteropenCB: function(){alert("afteropenCB -- Callback fired")},
+			afteropenCB: function(){},
 
-			beforeCloseCB: function(){alert("beforeCloseCB -- Callback fired")},
+			beforeCloseCB: function(){},
 
-			afterCloseCB: function(){alert("afterCloseCB -- Callback fired")},
+			afterCloseCB: function(){},
 
 			/* Init method */
 			init: function(options, element){
@@ -130,6 +130,10 @@ var teqOverlay = {
 			/* Load overlay content into content container, checks wether to add a close button or not */
 			loadOverlayContent: function( hrefLink ) {
 				var this_instance = this;
+				if(typeof this_instance.settings.beforeOpenCB == 'function') {
+
+					this_instance.settings.beforeOpenCB.call(this_instance);
+				}
 				window.console.log && console.log("loading content...");
 				if(typeof this_instance.settings.loadContent === 'function') {
 					this_instance.settings.loadContent();
@@ -141,6 +145,11 @@ var teqOverlay = {
 						}
 						this_instance.addDocumentEventHandler(); 
 					});
+
+					if(typeof this_instance.settings.afterOpenCB == 'function') {
+
+						this_instance.settings.afterOpenCB.call(this_instance);
+					}
 				}
 				
 				window.console.log && console.log('------------DONE---------------');

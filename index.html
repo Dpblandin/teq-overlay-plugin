@@ -45,9 +45,10 @@
 
    <script>
     $('[data-overlay]').teqOverlay({
-      onInitCB: function(){
-        console.log("Overloaded CB - onInit called");
+      beforeOpenCB: function(){
+        console.log(this);
       },
+
       overlayCSS:{},
       overlayTransition : {type: "fadeIn", duration:750},
       contentContainer: $('#overlay-content'),
