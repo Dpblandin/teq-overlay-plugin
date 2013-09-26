@@ -34,9 +34,7 @@ var teqOverlay = {
 
 				/* If an element is found, add background overlay and bind click events for links */
 				if(this.$element.length > 0){
-
-					this.addOverlayToStage();
-					this.bindClickEvents();
+					this._bindClickEvents();
 					done = !done;
 				}
 				else{
@@ -59,7 +57,6 @@ var teqOverlay = {
 			overlayCSS: {
 				display   : "none",
 				background: "rgba(0,0,0,.8)",
-				opacity   : "1",
 				position  : "fixed",
 				top       : 0,
 				left      : 0,
@@ -85,10 +82,29 @@ var teqOverlay = {
 			closeBtnHtml: "x",
 			closeTransition: {
 				type: "hide",
-				duration: 0
+				duration: null
 			},
 			closeFromOutside : true
 		},
+
+			/* Bind click events to matched elements to show overlay content */
+			_bindClickEvents: function(){
+				window.console.log && console.log('binding click events...');
+				var this_instance = this;
+				this.$element.bind("click", function(e) {
+					e.stopPropagation();
+					e.preventDefault();
+					/* Show or transition overlay. Default method is show() */
+					this_instance.addOverlayToStage();
+					this_instance.showOverlayWithTransition($('#'+this_instance.settings.overlayAttrs.ID));
+
+					/* Pass href element attribute to loading method */
+
+					this_instance.loadOverlayContent($(this).attr('href'));
+								
+				});
+				window.console.log && console.log('------------DONE---------------');
+			},
 
 			/* Add background overlay */
 			addOverlayToStage: function(){
@@ -109,24 +125,7 @@ var teqOverlay = {
 			
 				window.console.log && console.log('------------DONE---------------');
 			},
-			/* Bind click events to matched elements to show overlay content */
-			bindClickEvents: function(){
-				window.console.log && console.log('binding click events...');
-				var this_instance = this;
-				this.$element.bind("click", function(e) {
-					e.stopPropagation();
-					e.preventDefault();
-					/* Show or transition overlay. Default method is show() */
-					this_instance.addOverlayToStage();
-					this_instance.showOverlayWithTransition($('div#'+this_instance.settings.overlayAttrs.ID));
-
-					/* Pass href element attribute to loading method */
-
-					this_instance.loadOverlayContent($(this).attr('href'));
-								
-				});
-				window.console.log && console.log('------------DONE---------------');
-			},
+			
 			/* Load overlay content into content container, checks wether to add a close button or not */
 			loadOverlayContent: function( hrefLink ) {
 				var this_instance = this;
@@ -181,13 +180,13 @@ var teqOverlay = {
 				var overlayContainer = $("#"+this.settings.overlayAttrs.ID);
 
 				if(this.settings.closeFromOutside){
-						$(document).bind("click.outsideClickEvent", this.outsideCloseHandler(overlayContainer));
+					$(document).bind("click.outsideClickEvent", this.outsideCloseHandler(overlayContainer));
 						
-					}
-					else{
-						$(document).unbind("click.outsideClickEvent");
-					}
-				},
+				}
+				else{
+					$(document).unbind("click.outsideClickEvent");
+				}
+			},
 
 			outsideCloseHandler: function(overlayContainer){
 				var this_instance = this;
