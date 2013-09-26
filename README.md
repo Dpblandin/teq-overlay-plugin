@@ -28,7 +28,7 @@ Add a jQuery transition effect for the overlay (fadeIn only currently supported)
 Specify with either a jQuery selector or an element tag which element should receive contents
 
 	addCloseBtn        : boolean
-If set to true, will add a close button to top right corner of the overlay
+If set to true, will add a close button to top right corner of the overlay content container
 
 	closeBtnAttrs      : {object}
 Add any html attribute for the close button element
