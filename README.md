@@ -46,6 +46,9 @@ Html content of the close button element
 	}
 Add a jQuery transition effect for the close event (fadeOut only currently supported)
 
+	closeFromOutside : boolean
+If set to false, will disable the closing of the overlay by clicking anywhere outside of it
+
 
 Examples
 -------------------
@@ -54,8 +57,10 @@ Examples
       onInitCB: function(){
         alert("onInit callback called");
       },
-      overlayCSS:{backgroundColor: "#F300", opacity: 1},
+      overlayCSS:{backgroundColor: "#F300", zIndex: 99999},
       overlayTransition : {type: "fadeIn", duration:500},
-      contentContainer: $('.overlay-content'),
-      addCloseBtn : true
+      contentContainer: $('#overlay-content'),
+      addCloseBtn : true,
+      closeBtnHtml: '<span class="close btn">close me</span>',
+      closeFromOutside : false
     });
