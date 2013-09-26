@@ -11,21 +11,41 @@ Call the plugin with :
 Optional Parameters
 -------------------
 
-`overlayAttrs       = {object}` : add any html attribute for the overlay container
+	overlayAttrs       : {object}
+Add any html attribute for the overlay container 
 
-`overlayCSS         = {object}` : add css rules for the overlay container
+	overlayCSS         : {object}
+Add css rules for the overlay container
 
-`overlayTransition  = {type: string, duration: number}` : add a jQuery transition effect for the overlay (fadeIn only currently supported)
+	overlayTransition :
+	{
+	type: string, 
+	duration: number in ms
+	}
+Add a jQuery transition effect for the overlay (fadeIn only currently supported)
 
-`contentContainer   = string || jQuery selector` : Specify with either a jQuery selector or an element tag which element should receive contents
+	contentContainer   : string || jQuery selector
+Specify with either a jQuery selector or an element tag which element should receive contents
 
-`addCloseBtn        = boolean` : If set to true, will add a close button to top right corner of the overlay
+	addCloseBtn        : boolean
+If set to true, will add a close button to top right corner of the overlay
 
-`closeBtnAttrs      = {object}` : add any html attribute for the close button element
+	closeBtnAttrs      : {object}
+Add any html attribute for the close button element
 
-`closeBtnCSS        = {object}` : add css rules for the close button element
+	closeBtnCSS        : {object}
+Add css rules for the close button element
 
-`closeBtnHtml       = string` : Html content of the close button element
+	closeBtnHtml       : string
+Html content of the close button element
+
+	closeTransition    : 
+	{	
+	type: string, 
+	duration: number in ms
+	}
+Add a jQuery transition effect for the close event (fadeOut only currently supported)
+
 
 Examples
 -------------------
