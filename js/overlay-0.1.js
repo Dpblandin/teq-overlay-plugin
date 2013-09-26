@@ -1,8 +1,63 @@
-(function( $ ) {
- 
-    $.fn.teqOverlay = function( options ) {
+var teqOverlay = {
+		/* CB (callback) methods */
+			onInitCB: function(){
 
-		var defaults = {
+			},
+
+			onShowCB: function(){
+
+			},
+
+			onCompleteCB: function(){
+
+			},
+
+			afterContentLoadCB: function(){
+
+			},
+
+			/* Init method */
+			init: function(options, element){
+				this.settings = $.extend(true, {}, this.settings, options );
+				this.element = element;
+				this.$element = $(element);
+				this.instance = this;
+				var done = false;
+
+				/* Check if contentContainer param is passed as a simple string or a selector */
+
+				if(typeof this.settings.contentContainer == 'string' || this.settings.contentContainer instanceof String){
+					this.settings.contentContainer = $(this.settings.contentContainer);
+				}
+
+				/* Abort if no element matches selector */
+				if(this.settings.contentContainer.length == 0)
+				{
+					window.console.log && console.log("Error : jQuery couldn't find the content container specified with the selector you used ("+this.settings.contentContainer.selector+')');
+					return false;
+				}
+
+				/* If an element is found, add background overlay and bind click events for links */
+				if(this.$element.length > 0){
+
+					this.addOverlayToStage();
+					this.bindClickEvents();
+					done = !done;
+				}
+				else{
+					window.console.log && console.log("Error : jQuery couldn't find the element specified with the selector you used ("+element.selector+')');
+					return false;
+				}
+
+				/* When all is done, call callback */
+				//done ? this.settings.onInitCB() : '';
+
+				return this;
+			},
+
+			/* Settings */
+
+		settings : {
 			overlayAttrs: {
 				ID: 'overlay'
 			},
@@ -37,146 +92,105 @@
 				type: "hide",
 				duration: 0
 			}
-		};
-
-		var methods = {
-
-			/* CB (callback) methods */
-			onInitCB: function(){
-
-			},
-
-			onShowCB: function(){
-
-			},
-
-			onCompleteCB: function(){
-
-			},
-
-			afterContentLoadCB: function(){
-
-			},
-
-			/* Init method */
-			init: function(element){
-
-				/* find elements to be overlaid */
-				var done = false;
-
-				/* Check if contentContainer param is passed as a simple string or a selector */
-
-				if(typeof settings.contentContainer == 'string' || settings.contentContainer instanceof String){
-					settings.contentContainer = $(settings.contentContainer);
-				}
-
-				/* Abort if no element matches selector */
-				if(settings.contentContainer.length == 0)
-				{
-					window.console.log && console.log("Error : jQuery couldn't find the content container specified with the selector you used ("+settings.contentContainer.selector+')');
-					return false;
-				}
-
-				/* If an element is found, add background overlay and bind click events for links */
-				if(element.length > 0){
-
-					methods.addOverlayToStage();
-					methods.bindClickEvents(element, settings.overlayClose);
-					done = !done;
-				}
-				else{
-					window.console.log && console.log("Error : jQuery couldn't find the element specified with the selector you used ("+element.selector+')');
-					return false;
-				}
-
-				/* When all is done, call callback */
-				done ? settings.onInitCB() : '';
-			},
+		},
 
 			/* Add background overlay */
 			addOverlayToStage: function(){
 				window.console.log && console.log('Adding overlay to stage...');
-				
+				console.log(this);
 				/* Check wether a background has already beend added or not */
-				if($("#"+settings.overlayAttrs.ID).length == 0)
+				if($("#"+this.settings.overlayAttrs.ID).length == 0)
 				{
-					settings.contentContainer.wrap(
+					this.settings.contentContainer.wrap(
 						$('<div/>')
-						.attr(settings.overlayAttrs)
-						.css(settings.overlayCSS)
+						.attr(this.settings.overlayAttrs)
+						.css(this.settings.overlayCSS)
 					);
 	
+				}else {
+					$("#"+this.settings.overlayAttrs.ID).css(this.settings.overlayCSS);
 				}
 			
 				window.console.log && console.log('------------DONE---------------');
 			},
 			/* Bind click events to matched elements to show overlay content */
-			bindClickEvents: function(element, closeElement){
+			bindClickEvents: function(){
 				window.console.log && console.log('binding click events...');
-
-				element.bind("click", function(e) {
+				var this_instance = this;
+				this.$element.bind("click", function(e) {
 					e.stopPropagation();
 					e.preventDefault();
 					/* Show or transition overlay. Default method is show() */
-					
-					methods.showOverlayWithTransition($('div#'+settings.overlayAttrs.ID));
+					this_instance.addOverlayToStage();
+					this_instance.showOverlayWithTransition($('div#'+this_instance.settings.overlayAttrs.ID));
 
 					/* Pass href element attribute to loading method */
 
-					methods.loadOverlayContent(element.attr('href'));
+					this_instance.loadOverlayContent($(this).attr('href'));
 								
 				});
 				window.console.log && console.log('------------DONE---------------');
 			},
 			/* Load overlay content into content container, checks wether to add a close button or not */
 			loadOverlayContent: function( hrefLink ) {
+				var this_instance = this;
 				window.console.log && console.log("loading content...");
-				settings.contentContainer.load(hrefLink, function(){
-					if(settings.addCloseBtn){
-					methods.addCloseButton();
-					} 
-				}).show();
+				if(typeof this_instance.settings.loadContent === 'function') {
+					this_instance.settings.loadContent();
+				}
+				else {
+					this_instance.settings.contentContainer.load(hrefLink, function(){
+						if(this_instance.settings.addCloseBtn){
+							this_instance.addCloseButton();
+						} 
+					});
+				}
 				
 				window.console.log && console.log('------------DONE---------------');
 			},
 
 			/* Add a close button to overlay if necessary, then bind click event on that button in order to hide overlay */
 			addCloseButton: function() {
+				var this_instance = this;
 				window.console.log && console.log("adding close btn...");
+				if($("#"+this.settings.closeBtnAttrs.ID).length == 0 ){
 
-				if($("#"+settings.closeBtnAttrs.ID).length == 0 ){
-
-					var overlayContainer = $("#"+settings.overlayAttrs.ID);
+					var overlayContainer = $("#"+this.settings.overlayAttrs.ID);
 
 					$('<div/>')
-					.attr(settings.closeBtnAttrs)
-					.css(settings.closeBtnCSS)
-					.html(settings.closeBtnHtml)
-					.prependTo(settings.contentContainer)
-					.bind("click", function(e){
-						e.preventDefault();
-						methods.hideElementWithTransition(overlayContainer);
-					});
+					.attr(this.settings.closeBtnAttrs)
+					.css(this.settings.closeBtnCSS)
+					.html(this.settings.closeBtnHtml)
+					.prependTo(this.settings.contentContainer)
+					.bind( "click", this.closeButtonHandler(overlayContainer) )
 
-					settings.contentContainer.bind("click", function(e){
+					this.settings.contentContainer.bind("click", function(e){
 						e.stopPropagation();
 					})
 
 					$(document).bind("click", function(e){
 						e.stopPropagation();
-						methods.hideElementWithTransition(overlayContainer);
+						this_instance.hideElementWithTransition(overlayContainer);
 					})
 					
 				}
 				window.console.log && console.log('------------DONE---------------');
 			},
 
+			closeButtonHandler: function (overlayContainer){
+				var this_instance = this;
+				return function(e) {
+					e.preventDefault();
+					this_instance.hideElementWithTransition(overlayContainer);
+				}
+			},
+
 			/* Hides an element with specified transition effect */
 			hideElementWithTransition: function( element ){
-				switch (settings.closeTransition.type) {
+				switch (this.settings.closeTransition.type) {
 
 						case "fadeOut":
-							element.fadeOut(settings.closeTransition.duration);
+							element.fadeOut(this.settings.closeTransition.duration);
 						break;
 
 						default:
@@ -189,10 +203,10 @@
 			/* Shows overlay with specified transition effect */
 			showOverlayWithTransition: function ( element ){
 
-					switch (settings.overlayTransition.type) {
+					switch (this.settings.overlayTransition.type) {
 
 						case "fadeIn":
-							element.fadeIn(settings.overlayTransition.duration);
+							element.fadeIn(this.settings.overlayTransition.duration);
 						break;
 
 						default:
@@ -202,23 +216,23 @@
 					}
 			}
 		
+};
 
-		};
 
- 		
+(function( $ ) {
+ 
+    $.fn.teqOverlay = function( options ) {	
        
        	return this.each(function () {
 
-       		var $this = $(this);
+       		var aTeqOverlay = Object.create(teqOverlay);
 
-       		settings = $.extend(true, {}, defaults, options );
-
+       		aTeqOverlay.init(options, this)
        		
-       		methods.init($this);
-       		
+       		$.data(this, 'teqOverlay', aTeqOverlay);
        	});
 
 
     };
  
-}( jQuery ));
+})( jQuery );

@@ -23,11 +23,17 @@
       <br>
     <a href="partials/testOverlay2.html" data-overlay>It should be another overlay</a>
       <br>
-    <a href="partials/testOverlay2.html">Normal link</a>
-      <br>
     <button href="partials/testOverlay1.html" data-overlay>And another overlay in button tag</button>
+      <br>
+    <button id="custom-overlay1" href="partials/testOverlay1.html">Overlay with no transition and blue backround</button>
+    <br>
+    <button id="custom-overlay2">Load content with custom method</button>
     	
-    <div class="overlay-content">
+    <div id="overlay-content" class="overlay-content">
+      
+    </div>
+
+    <div id="custom-overlay-content">
       
     </div>
 
@@ -41,11 +47,27 @@
         console.log("Overloaded CB - onInit called");
       },
       overlayCSS:{},
-      overlayTransition : {type: "fadeIn", duration:450},
-      contentContainer: $('.overlay-content'),
+      overlayTransition : {type: "fadeIn", duration:750},
+      contentContainer: $('#overlay-content'),
       addCloseBtn : true,
-      closeTransition: {type:"fadeOut", duration:700}
+      closeTransition: {type:"fadeOut", duration:750}
     });
+
+    $('#custom-overlay1').teqOverlay({
+      overlayCSS:{background: "blue", text: "white"},
+      contentContainer: $('#overlay-content'),
+      addCloseBtn : true,
+    });
+
+    //Call plugin with custom load content method
+   /* $('#custom-overlay2').teqOverlay({
+      loadContent : function(){
+        $.get('partials/testOverlay1.html',{}, function( html ){
+          $('#custom-overlay-content').html().append(html);
+        });
+      },
+      contentContainer: $('#custom-overlay-content')
+    });*/
    </script>
 
 </html>
