@@ -98,7 +98,7 @@ var teqOverlay = {
 			/* Add background overlay */
 			addOverlayToStage: function(){
 				window.console.log && console.log('Adding overlay to stage...');
-				console.log(this);
+				window.console.log && console.log(this);
 				/* Check wether a background has already beend added or not */
 				if($("#"+this.settings.overlayAttrs.ID).length == 0)
 				{
