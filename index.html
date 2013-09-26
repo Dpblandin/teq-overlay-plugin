@@ -59,12 +59,13 @@
     $('#custom-overlay1').teqOverlay({
       overlayCSS:{background: "rgba(0,100,255, .8)"},
       contentContainer: $('#overlay-content'),
-      addCloseBtn : true,
+      addCloseBtn : true
     });
 
     $('#custom-overlay2').teqOverlay({
       contentContainer: $('#overlay-content'),
       addCloseBtn : true,
+      closeBtnHtml: '<span class="close">CLOSE</span>',
       closeFromOutside : false
     });
 
