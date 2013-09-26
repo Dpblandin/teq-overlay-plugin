@@ -26,8 +26,10 @@
     <button href="partials/testOverlay1.html" data-overlay>And another overlay in button tag</button>
       <br>
     <button id="custom-overlay1" href="partials/testOverlay1.html">Overlay with no transition and blue background</button>
-    <br>
-    <button id="custom-overlay2">Load content with custom method</button>
+      <br>
+    <button id="custom-overlay2" href="partials/testOverlay2.html">Overlay with no outside close</button>
+      <br>
+    <button id="custom-overlay3">Load content with custom method</button>
     	
     <div id="overlay-content" class="overlay-content">
       
@@ -57,6 +59,12 @@
       overlayCSS:{background: "rgba(0,100,255, .8)", text: "white"},
       contentContainer: $('#overlay-content'),
       addCloseBtn : true,
+    });
+
+    $('#custom-overlay2').teqOverlay({
+      contentContainer: $('#overlay-content'),
+      addCloseBtn : true,
+      closeFromOutside : false
     });
 
     //Call plugin with custom load content method

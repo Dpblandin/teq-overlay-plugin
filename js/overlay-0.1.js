@@ -91,7 +91,8 @@ var teqOverlay = {
 			closeTransition: {
 				type: "hide",
 				duration: 0
-			}
+			},
+			closeFromOutside : true
 		},
 
 			/* Add background overlay */
@@ -141,8 +142,9 @@ var teqOverlay = {
 				else {
 					this_instance.settings.contentContainer.load(hrefLink, function(){
 						if(this_instance.settings.addCloseBtn){
-							this_instance.addCloseButton();
-						} 
+							this_instance.addCloseButton();	
+						}
+						this_instance.addDocumentEventHandler(); 
 					});
 				}
 				
@@ -167,19 +169,34 @@ var teqOverlay = {
 					this.settings.contentContainer.bind("click", function(e){
 						e.stopPropagation();
 					})
-
-					$(document).bind("click", function(e){
-						e.stopPropagation();
-						this_instance.hideElementWithTransition(overlayContainer);
-					})
-					
 				}
 				window.console.log && console.log('------------DONE---------------');
 			},
 
+			addDocumentEventHandler: function() {
+				var overlayContainer = $("#"+this.settings.overlayAttrs.ID);
+
+				if(this.settings.closeFromOutside){
+						$(document).bind("click.outsideClickEvent", this.outsideCloseHandler(overlayContainer));
+						
+					}
+					else{
+						$(document).unbind("click.outsideClickEvent");
+					}
+				},
+
+			outsideCloseHandler: function(overlayContainer){
+				var this_instance = this;
+				return function(e) {
+					e.stopPropagation();
+					e.preventDefault();
+					this_instance.hideElementWithTransition(overlayContainer);
+				}
+			},
 			closeButtonHandler: function (overlayContainer){
 				var this_instance = this;
 				return function(e) {
+					e.stopPropagation();
 					e.preventDefault();
 					this_instance.hideElementWithTransition(overlayContainer);
 				}
