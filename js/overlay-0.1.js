@@ -1,27 +1,22 @@
 var teqOverlay = {
 		/* CB (callback) methods */
-			onInitCB: function(){
+			onInitCB: function(){},
 
-			},
+			beforeOpenCB: function(){alert("beforeOpenCB -- Callback fired")},
 
-			onShowCB: function(){
+			onOpenCB: function(){alert("onOpenCB -- Callback fired")},
 
-			},
+			afteropenCB: function(){alert("afteropenCB -- Callback fired")},
 
-			onCompleteCB: function(){
+			beforeCloseCB: function(){alert("beforeCloseCB -- Callback fired")},
 
-			},
-
-			afterContentLoadCB: function(){
-
-			},
+			afterCloseCB: function(){alert("afterCloseCB -- Callback fired")},
 
 			/* Init method */
 			init: function(options, element){
 				this.settings = $.extend(true, {}, this.settings, options );
 				this.element = element;
 				this.$element = $(element);
-				this.instance = this;
 				var done = false;
 
 				/* Check if contentContainer param is passed as a simple string or a selector */
