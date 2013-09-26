@@ -40,9 +40,10 @@
         console.log("Overloaded CB - onInit called");
       },
       overlayCSS:{},
-      overlayTransition : {},
+      overlayTransition : {type: "fadeIn", duration:450},
       contentContainer: $('.overlay-content'),
-      addCloseBtn : true
+      addCloseBtn : true,
+      closeTransition: {type:"fadeOut", duration:700}
     });
    </script>
 </html>

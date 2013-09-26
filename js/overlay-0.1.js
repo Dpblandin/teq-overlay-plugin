@@ -8,7 +8,7 @@
 			},
 			overlayCSS: {
 				display   : "none",
-				background: "rgba(0,0,0,.5)",
+				background: "rgba(0,0,0,.8)",
 				opacity   : "1",
 				position  : "fixed",
 				top       : 0,
@@ -32,7 +32,11 @@
 				right    : 0,
 				cursor   : "pointer"
 			},
-			closeBtnHtml: "x"
+			closeBtnHtml: "x",
+			closeTransition: {
+				type: "hide",
+				duration: 0
+			}
 		};
 
 		var methods = {
@@ -111,20 +115,11 @@
 				window.console.log && console.log('binding click events...');
 
 				element.bind("click", function(e) {
+					e.stopPropagation();
 					e.preventDefault();
-					
 					/* Show or transition overlay. Default method is show() */
-					switch (settings.overlayTransition.type) {
-
-						case "fadeIn":
-							$('div#'+settings.overlayAttrs.ID).fadeIn(settings.overlayTransition.duration);
-						break;
-
-						default:
-							$('div#'+settings.overlayAttrs.ID).show();
-						break;
-						
-					}
+					
+					methods.showOverlayWithTransition($('div#'+settings.overlayAttrs.ID));
 
 					/* Pass href element attribute to loading method */
 
@@ -148,7 +143,10 @@
 			/* Add a close button to overlay if necessary, then bind click event on that button in order to hide overlay */
 			addCloseButton: function() {
 				window.console.log && console.log("adding close btn...");
+
 				if($("#"+settings.closeBtnAttrs.ID).length == 0 ){
+
+					var overlayContainer = $("#"+settings.overlayAttrs.ID);
 
 					$('<div/>')
 					.attr(settings.closeBtnAttrs)
@@ -157,12 +155,51 @@
 					.prependTo(settings.contentContainer)
 					.bind("click", function(e){
 						e.preventDefault();
-						$(this).parent().hide();
-						$("#"+settings.overlayAttrs.ID).hide();
-					});	
+						methods.hideElementWithTransition(overlayContainer);
+					});
+
+					settings.contentContainer.bind("click", function(e){
+						e.stopPropagation();
+					})
+
+					$(document).bind("click", function(e){
+						e.stopPropagation();
+						methods.hideElementWithTransition(overlayContainer);
+					})
 					
 				}
 				window.console.log && console.log('------------DONE---------------');
+			},
+
+			/* Hides an element with specified transition effect */
+			hideElementWithTransition: function( element ){
+				switch (settings.closeTransition.type) {
+
+						case "fadeOut":
+							element.fadeOut(settings.closeTransition.duration);
+						break;
+
+						default:
+							element.hide();
+						break;
+						
+					}
+			},
+
+			/* Shows overlay with specified transition effect */
+			showOverlayWithTransition: function ( element ){
+
+					switch (settings.overlayTransition.type) {
+
+						case "fadeIn":
+							element.fadeIn(settings.overlayTransition.duration);
+						break;
+
+						default:
+							element.show();
+						break;
+						
+					}
 			}
 		
 
