@@ -92,8 +92,6 @@ You can of course call the plugin multiple times on different elements like this
 
 	// etc.
 
-And so on. 
-
 [*To top*](#table-of-contents)
 
 Examples
