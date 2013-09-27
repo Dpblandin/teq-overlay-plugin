@@ -1,14 +1,27 @@
 Teq-overlay-plugin
 ==================
 
-Usage 
+Table of contents
+------------------
+
+* [Usage](#usage)
+* [Optional parameters](#optional-params)
+* [Advanced usage](#advanced-usage)
+	* [Accessing instanciated object](#accessing-object)
+	* [Multi-instanciation](#multi-instance)
+* [Examples](#examples)
+
+<a id="usage"></a>Usage 
 ------------------
 
 Call the plugin with :
 
 	$([selector]).teqOverlay();
 
-Optional Parameters
+
+[*To top*](#table-of-contents)
+
+<a id="optional-params"></a>Optional Parameters
 -------------------
 
 	overlayAttrs       : {object}
@@ -49,10 +62,11 @@ Add a jQuery transition effect for the close event (fadeOut only currently suppo
 	closeFromOutside : boolean
 If set to false, will disable the closing of the overlay by clicking anywhere outside of it
 
+[*To top*](#table-of-contents)
 
-Advanced usage
+<a id="advanced-usage"></a>Advanced usage
 ------------------
-### Accessing the instanciated object
+### <a id="accessing-object"></a>Accessing the instanciated object
 
 When you call the plugin with `$("mySelector").teqOverlay()`, you can quickly access the teqOverlay object with :
 
@@ -63,7 +77,7 @@ This will return an object containing :
 * The javascript element `element`
 * A settings object containing all the parameters, including any callbacks you have passed in.
 
-### Multi-instanciation
+### <a id="multi-instance"></a>Multi-instanciation
 
 You can of course call the plugin multiple times on different elements like this :
 
@@ -79,7 +93,9 @@ You can of course call the plugin multiple times on different elements like this
 
 And so on. 
 
-Examples
+[*To top*](#table-of-contents)
+
+<a id="examples"></a>Examples
 -------------------
 
     $('a[data-overlay]').teqOverlay({
@@ -93,3 +109,5 @@ Examples
       closeBtnHtml: '<span class="close btn">close me</span>',
       closeFromOutside : false
     });
+
+[*To top*](#table-of-contents)
