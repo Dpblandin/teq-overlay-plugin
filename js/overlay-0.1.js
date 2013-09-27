@@ -12,6 +12,8 @@ var teqOverlay = {
 
 			afterCloseCB: function(){},
 
+			loadContent: function(){},
+
 			/* Init method */
 			init: function(options, element){
 				this.settings = $.extend(true, {}, this.settings, options );
@@ -94,14 +96,14 @@ var teqOverlay = {
 				this.$element.bind("click", function(e) {
 					e.stopPropagation();
 					e.preventDefault();
-					/* Show or transition overlay. Default method is show() */
-					this_instance.addOverlayToStage();
-					this_instance.showOverlayWithTransition($('#'+this_instance.settings.overlayAttrs.ID));
+					/* Add overlay to DOM */
+					if(this_instance.addOverlayToStage()) {
+						/* Pass href element attribute to loading method */
+						this_instance.loadOverlayContent($(this).attr('href'));
 
-					/* Pass href element attribute to loading method */
-
-					this_instance.loadOverlayContent($(this).attr('href'));
-								
+						/* Show overlay with specified transitions */
+						this_instance.showOverlayWithTransition($('#'+this_instance.settings.overlayAttrs.ID));
+					}							
 				});
 				window.console.log && console.log('------------DONE---------------');
 			},
@@ -110,18 +112,27 @@ var teqOverlay = {
 			addOverlayToStage: function(){
 				window.console.log && console.log('Adding overlay to stage...');
 				window.console.log && console.log(this);
+				
+				var isDone = false;
+				this.cleanContents();
 				/* Check wether a background has already beend added or not */
-				if($("#"+this.settings.overlayAttrs.ID).length == 0)
+				if(this.settings.contentContainer.parents("#"+this.settings.overlayAttrs.ID).length == 0)
 				{
-					this.settings.contentContainer.wrap(
+					$.when(this.settings.contentContainer.wrap(
 						$('<div/>')
 						.attr(this.settings.overlayAttrs)
 						.css(this.settings.overlayCSS)
-					);
+					)).done(function(){
+						isDone = true;
+					});
 	
 				}else {
-					$("#"+this.settings.overlayAttrs.ID).css(this.settings.overlayCSS);
+
+					this.settings.contentContainer.parents("#"+this.settings.overlayAttrs.ID).css(this.settings.overlayCSS)
+					.done(function(){isDone = true});
 				}
+
+				return isDone;
 			
 				window.console.log && console.log('------------DONE---------------');
 			},
@@ -134,28 +145,55 @@ var teqOverlay = {
 					this_instance.settings.beforeOpenCB.call(this_instance);
 				}
 				window.console.log && console.log("loading content...");
+				
+
 				if(typeof this_instance.settings.loadContent === 'function') {
+					
 					this_instance.settings.loadContent();
-				}
-				else {
-					this_instance.settings.contentContainer.load(hrefLink, function(){
-						if(this_instance.settings.addCloseBtn){
+						if(this_instance.settings.addCloseBtn) {
 							this_instance.addCloseButton();	
 						}
+						if(this_instance.settings.closeFromOutside) {
 
-						if(this_instance.settings.closeFromOutside){
 							this_instance.addDocumentEventHandler(); 
 						}
 
-					});
-
-					if(typeof this_instance.settings.afterOpenCB == 'function') {
-
-						this_instance.settings.afterOpenCB.call(this_instance);
-					}
 				}
+				else {
+					this_instance.settings.contentContainer.load(hrefLink, function() {
+
+						if(this_instance.settings.addCloseBtn){
+							this_instance.addCloseButton();	
+						}
+						if(this_instance.settings.closeFromOutside){
+
+							this_instance.addDocumentEventHandler(); 
+						}
+					});
+				}
+
+				if(typeof this_instance.settings.afterOpenCB == 'function') {
+
+					this_instance.settings.afterOpenCB.call(this_instance);
+				}
+
 				
 				window.console.log && console.log('------------DONE---------------');
+			},
+
+			cleanContents: function() {
+				var elements = $("*").filter(function() {
+				    return $(this).data("teqOverlay") !== undefined;
+				});
+
+				if(elements.length > 0){
+
+					for(var i = 0; i < elements.get().length; i++){
+
+						$(elements.get(i)).data("teqOverlay").settings.contentContainer.unwrap().empty();
+					}
+						
+				}
 			},
 
 			/* Add a close button to overlay if necessary, then bind click event on that button in order to hide overlay */

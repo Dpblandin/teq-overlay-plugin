@@ -8,8 +8,6 @@
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-
-
         <link rel="stylesheet" href="css/teq-overlay.css" />
 
 	   <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -70,14 +68,15 @@
     });
 
     //Call plugin with custom load content method
-   /* $('#custom-overlay2').teqOverlay({
+   $('#custom-overlay3').teqOverlay({
       loadContent : function(){
-        $.get('partials/testOverlay1.html',{}, function( html ){
-          $('#custom-overlay-content').html().append(html);
-        });
+       $.get('partials/testOverlayCustom.html',function(html){
+          $(html).appendTo('#custom-overlay-content');
+       });
       },
-      contentContainer: $('#custom-overlay-content')
-    });*/
+      contentContainer: $('#custom-overlay-content'),
+      addCloseBtn: true
+    });
    </script>
 
 </html>
