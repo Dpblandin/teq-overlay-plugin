@@ -39,7 +39,8 @@ Add css rules for the overlay container
 Add a jQuery transition effect for the overlay (fadeIn only currently supported)
 
 	contentContainer   : string || jQuery selector
-Specify with either a jQuery selector or an element tag which element should receive contents
+Specify with either a jQuery selector or an element tag which element should receive contents.
+If not specified, the plugin will look for any element that has `teq-overlay-content` as its id attribute.
 
 	addCloseBtn        : boolean
 If set to true, will add a close button to top right corner of the overlay content container

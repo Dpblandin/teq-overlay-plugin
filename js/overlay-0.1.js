@@ -70,7 +70,7 @@ var teqOverlay = {
 				type: "show", 
 				duration: 0
 			},
-			contentContainer : $('div.overlay-content'),
+			contentContainer : $('div#teq-overlay-content'),
 			addCloseBtn: false,
 			closeBtnAttrs:{
 				ID: 'overlay-close'
