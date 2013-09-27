@@ -52,8 +52,9 @@ If set to false, will disable the closing of the overlay by clicking anywhere ou
 
 Advanced usage
 ------------------
+### Accessing the instanciated object
 
-When you call the plugin with `$("mySelector").teqOverlay()`, you can access the teqOverlay object with :
+When you call the plugin with `$("mySelector").teqOverlay()`, you can quickly access the teqOverlay object with :
 
 	$("mySelector").data('teqOverlay');
 
@@ -62,6 +63,21 @@ This will return an object containing :
 * The javascript element `element`
 * A settings object containing all the parameters, including any callbacks you have passed in.
 
+### Multi-instanciation
+
+You can of course call the plugin multiple times on different elements like this :
+
+	$('a.overlay').teqOverlay();
+
+	$('button[data-overlay="true"]').teqOverlay({
+		addCloseBtn: false,
+		contentContainer: $('#overlay-content'),
+		afterCloseCB: function() {}
+	});
+
+	// etc.
+
+And so on. 
 
 Examples
 -------------------
