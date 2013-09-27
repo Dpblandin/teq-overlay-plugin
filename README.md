@@ -6,7 +6,7 @@ Table of contents
 
 * [Usage](#usage)
 * [Optional parameters](#optional-params)
-	*[Default settings](#default-settings)
+	* [Default settings](#default-settings)
 * [Callbacks](#callbacks)
 * [Advanced usage](#advanced-usage)
 	* [Accessing instanciated object](#accessing-the-instanciated-object)
