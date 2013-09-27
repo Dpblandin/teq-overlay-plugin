@@ -75,7 +75,7 @@ When you call the plugin with `$("mySelector").teqOverlay()`, you can quickly ac
 This will return an object containing :
 * The jQuery element `$element`
 * The javascript element `element`
-* A settings object containing all the parameters, including any callbacks you have passed in.
+* A `settings` object containing all the parameters, including any callbacks you have passed in.
 
 ### Multi-instanciation
 
