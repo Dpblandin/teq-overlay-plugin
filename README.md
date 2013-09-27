@@ -9,6 +9,7 @@ Table of contents
 * [Advanced usage](#advanced-usage)
 	* [Accessing instanciated object](#accessing-the-instanciated-object)
 	* [Multi-instanciation](#multi-instanciation)
+	* [Custom load method](#custom-load-method)
 * [Examples](#examples)
 
 Usage 
@@ -91,6 +92,20 @@ You can of course call the plugin multiple times on different elements like this
 	});
 
 	// etc.
+
+### Custom load method
+
+If you wish to use your own method for loading content, you can pass the `loadContent` method as a parameter, like so:
+
+	$("myselector").teqOverlay({
+		//optional params ...
+		loadContent : function(){
+			// Your method logic here
+		}
+	       
+	});
+
+Please note that as of yet, jQuery.load() is not supported.
 
 [*To top*](#table-of-contents)
 
