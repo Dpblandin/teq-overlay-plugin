@@ -84,7 +84,7 @@ var teqOverlay = {
 			closeBtnHtml: "x",
 			closeTransition: {
 				type: "hide",
-				duration: null
+				duration: 0
 			},
 			closeFromOutside : true
 		},
