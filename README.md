@@ -7,11 +7,11 @@ Table of contents
 * [Usage](#usage)
 * [Optional parameters](#optional-params)
 * [Advanced usage](#advanced-usage)
-	* [Accessing instanciated object](#accessing-object)
-	* [Multi-instanciation](#multi-instance)
+	* [Accessing instanciated object](#accessing-the-instanciated-object)
+	* [Multi-instanciation](#multi-instanciation)
 * [Examples](#examples)
 
-<a id="usage"></a>Usage 
+Usage 
 ------------------
 
 Call the plugin with :
@@ -21,7 +21,7 @@ Call the plugin with :
 
 [*To top*](#table-of-contents)
 
-<a id="optional-params"></a>Optional Parameters
+Optional Parameters
 -------------------
 
 	overlayAttrs       : {object}
@@ -64,9 +64,9 @@ If set to false, will disable the closing of the overlay by clicking anywhere ou
 
 [*To top*](#table-of-contents)
 
-<a id="advanced-usage"></a>Advanced usage
+Advanced usage
 ------------------
-### <a id="accessing-object"></a>Accessing the instanciated object
+### Accessing the instanciated object
 
 When you call the plugin with `$("mySelector").teqOverlay()`, you can quickly access the teqOverlay object with :
 
@@ -77,7 +77,7 @@ This will return an object containing :
 * The javascript element `element`
 * A settings object containing all the parameters, including any callbacks you have passed in.
 
-### <a id="multi-instance"></a>Multi-instanciation
+### Multi-instanciation
 
 You can of course call the plugin multiple times on different elements like this :
 
@@ -95,7 +95,7 @@ And so on.
 
 [*To top*](#table-of-contents)
 
-<a id="examples"></a>Examples
+Examples
 -------------------
 
     $('a[data-overlay]').teqOverlay({
