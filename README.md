@@ -105,7 +105,7 @@ If you wish to use your own method for loading content, you can pass the `loadCo
 	       
 	});
 
-Please note that as of yet, `jQuery.load()` is not supported.
+Please note that as of yet, `jQuery.load()` is not fully supported and may produce unwanted behaviours.
 
 [*To top*](#table-of-contents)
 
