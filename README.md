@@ -50,6 +50,19 @@ Add a jQuery transition effect for the close event (fadeOut only currently suppo
 If set to false, will disable the closing of the overlay by clicking anywhere outside of it
 
 
+Advanced usage
+------------------
+
+When you call the plugin with `$("mySelector").teqOverlay()`, you can access the teqOverlay object with :
+
+	$("mySelector").data('teqOverlay');
+
+This will return an object containing :
+* The jQuery element `$element`
+* The javascript element `element`
+* A settings object containing all the parameters, including any callbacks you have passed in.
+
+
 Examples
 -------------------
 
