@@ -96,13 +96,19 @@ var teqOverlay = {
 				this.$element.bind("click", function(e) {
 					e.stopPropagation();
 					e.preventDefault();
-					/* Add overlay to DOM */
+					/* Add overlay to DOM and return true if all is good */
 					if(this_instance.addOverlayToStage()) {
 						/* Pass href element attribute to loading method */
 						this_instance.loadOverlayContent($(this).attr('href'));
 
-						/* Show overlay with specified transitions */
-						this_instance.showOverlayWithTransition($('#'+this_instance.settings.overlayAttrs.ID));
+						/* Show overlay with specified transitions and then fire afterOpenCB callback */
+						if( this_instance.showOverlayWithTransition($('#'+this_instance.settings.overlayAttrs.ID)) ) {
+
+							if(typeof this_instance.settings.afterOpenCB == 'function') {
+
+								this_instance.settings.afterOpenCB.call(this_instance);
+							}
+						}	
 					}							
 				});
 				window.console.log && console.log('------------DONE---------------');
@@ -140,6 +146,7 @@ var teqOverlay = {
 			/* Load overlay content into content container, checks wether to add a close button or not */
 			loadOverlayContent: function( hrefLink ) {
 				var this_instance = this;
+				var done = false;
 				if(typeof this_instance.settings.beforeOpenCB == 'function') {
 
 					this_instance.settings.beforeOpenCB.call(this_instance);
@@ -150,13 +157,15 @@ var teqOverlay = {
 				if(typeof this_instance.settings.loadContent === 'function') {
 					
 					this_instance.settings.loadContent();
-						if(this_instance.settings.addCloseBtn) {
-							this_instance.addCloseButton();	
-						}
-						if(this_instance.settings.closeFromOutside) {
 
-							this_instance.addDocumentEventHandler(); 
-						}
+					if(this_instance.settings.addCloseBtn) {
+						this_instance.addCloseButton();	
+					}
+					if(this_instance.settings.closeFromOutside) {
+						this_instance.addDocumentEventHandler(); 
+					}
+
+					done = true;
 
 				}
 				else {
@@ -169,15 +178,10 @@ var teqOverlay = {
 
 							this_instance.addDocumentEventHandler(); 
 						}
+						done = true;
 					});
 				}
 
-				if(typeof this_instance.settings.afterOpenCB == 'function') {
-
-					this_instance.settings.afterOpenCB.call(this_instance);
-				}
-
-				
 				window.console.log && console.log('------------DONE---------------');
 			},
 
@@ -248,6 +252,10 @@ var teqOverlay = {
 
 			/* Hides an element with specified transition effect */
 			hideElementWithTransition: function( element, transition ){
+				if(typeof this.settings.beforeCloseCB == 'function') {
+
+					this.settings.beforeCloseCB.call(this);
+				}
 				switch (transition.type) {
 
 						case "fadeOut":
@@ -261,21 +269,33 @@ var teqOverlay = {
 				}
 
 				this.removeDocumentEventHandler();
+
+				if(typeof this.settings.afterCloseCB == 'function') {
+
+					this.settings.afterCloseCB.call(this);
+				}
 			},
 
 			/* Shows overlay with specified transition effect */
 			showOverlayWithTransition: function ( element ){
+				var done = false;
 					switch (this.settings.overlayTransition.type) {
 
 						case "fadeIn":
-							element.fadeIn(this.settings.overlayTransition.duration);
+							element.fadeIn(this.settings.overlayTransition.duration, function(){
+								done = true;
+							});
 						break;
 
 						default:
-							element.show();
+							element.show(0, function() {
+								done = true;
+							});
 						break;
 						
 					}
+				
+				return done;
 			}
 		
 };

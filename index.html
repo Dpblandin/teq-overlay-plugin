@@ -28,6 +28,8 @@
     <button id="custom-overlay2" href="partials/testOverlay4.html">Overlay with no outside close and custom close button</button>
       <br>
     <button id="custom-overlay3">Load content with custom method</button>
+      <br>
+    <button id="custom-overlayCB" href="partials/testOverlay1.html">Overlay with callbacks</button>
     	
     <div id="overlay-content" class="overlay-content">
       
@@ -77,6 +79,25 @@
       contentContainer: $('#custom-overlay-content'),
       addCloseBtn: true
     });
+
+   //Callbacks use
+   $('#custom-overlayCB').teqOverlay({
+      beforeOpenCB : function() {
+          alert("beforeOpenCB callback fired");
+      },
+      afterOpenCB: function() {
+          alert("afterOpenCB callback fired");
+      },
+      beforeCloseCB: function() {
+          alert("beforeCloseCB callback fired");
+      },
+      afterCloseCB: function() {
+          alert("afterCloseCB callback fired");
+      },
+      contentContainer: $('#overlay-content'),
+      addCloseBtn: true
+    });
+
    </script>
 
 </html>
