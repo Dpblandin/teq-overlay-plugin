@@ -1,0 +1,6 @@
+.overlay-content, #custom-overlay-content {
+	background:#FFF;
+	position:relative;
+	width: 60%;
+	margin-left: 15%;
+}
