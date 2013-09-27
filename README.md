@@ -73,9 +73,9 @@ Callbacks
 When calling the plugin, you can pass any of the following callback methods :
 
 * `beforeOpenCB`  : called *before* the overlay opens
-* `afterOpenCB`   : called *after* the overlay and it's content has loaded
+* `afterOpenCB`   : called *after* the overlay and it's content is loaded
 * `beforeCloseCB` : called *before* the overlay closes
-* `afterCloseCB`  : called *after* the overlay has closed
+* `afterCloseCB`  : called *after* the overlay is closed
 
 [*To top*](#table-of-contents)
 
