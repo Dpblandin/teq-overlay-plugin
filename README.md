@@ -6,6 +6,7 @@ Table of contents
 
 * [Usage](#usage)
 * [Optional parameters](#optional-params)
+* [Callbacks](#callbacks)
 * [Advanced usage](#advanced-usage)
 	* [Accessing instanciated object](#accessing-the-instanciated-object)
 	* [Multi-instanciation](#multi-instanciation)
@@ -63,6 +64,18 @@ Add a jQuery transition effect for the close event (fadeOut only currently suppo
 
 	closeFromOutside : boolean
 If set to false, will disable the closing of the overlay by clicking anywhere outside of it
+
+[*To top*](#table-of-contents)
+
+Callbacks
+------------------
+
+When calling the plugin, you can pass any of the following callback methods :
+
+* `beforeOpenCB`  : called *before* the overlay opens
+* `afterOpenCB`   : called *after* the overlay and it's content has loaded
+* `beforeCloseCB` : called *before* the overlay closes
+* `afterCloseCB`  : called *after* the overlay has closed
 
 [*To top*](#table-of-contents)
 
