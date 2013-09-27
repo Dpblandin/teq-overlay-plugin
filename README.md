@@ -6,6 +6,7 @@ Table of contents
 
 * [Usage](#usage)
 * [Optional parameters](#optional-params)
+	*[Default settings](#default-settings)
 * [Callbacks](#callbacks)
 * [Advanced usage](#advanced-usage)
 	* [Accessing instanciated object](#accessing-the-instanciated-object)
@@ -64,6 +65,45 @@ Add a jQuery transition effect for the close event (fadeOut only currently suppo
 
 	closeFromOutside : boolean
 If set to false, will disable the closing of the overlay by clicking anywhere outside of it
+
+### Default settings
+
+	settings : {
+				overlayAttrs: {
+					ID: 'overlay'
+				},
+				overlayCSS: {
+					display   : "none",
+					background: "rgba(0,0,0,.8)",
+					position  : "fixed",
+					top       : 0,
+					left      : 0,
+					width     : $(window).width(),
+					height    : $(window).height(),
+					zIndex    : 9999999
+				},
+				overlayTransition  : {
+					type: "show", 
+					duration: 0
+				},
+				contentContainer : $('div#teq-overlay-content'),
+				addCloseBtn: false,
+				closeBtnAttrs:{
+					ID: 'overlay-close'
+				},
+				closeBtnCSS: {
+					position: "absolute",
+					top      : 0,
+					right    : 0,
+					cursor   : "pointer"
+				},
+				closeBtnHtml: "x",
+				closeTransition: {
+					type: "hide",
+					duration: 0
+				},
+				closeFromOutside : true
+			},
 
 [*To top*](#table-of-contents)
 
