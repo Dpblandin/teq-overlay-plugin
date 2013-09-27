@@ -66,6 +66,8 @@ Add a jQuery transition effect for the close event (fadeOut only currently suppo
 	closeFromOutside : boolean
 If set to false, will disable the closing of the overlay by clicking anywhere outside of it
 
+[*To top*](#table-of-contents)
+
 ### Default settings
 
 	settings : {
