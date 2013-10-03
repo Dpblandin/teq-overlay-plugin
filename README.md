@@ -63,8 +63,14 @@ Html content of the close button element
 	}
 Add a jQuery transition effect for the close event (fadeOut only currently supported)
 
-	closeFromOutside : boolean
+	closeFromOutside   : boolean
 If set to false, will disable the closing of the overlay by clicking anywhere outside of it
+	
+	customCloseCursor  : boolean
+If set to true, will add a custom close cursor that will appear when hovering outside the content container 
+
+	closeCursorUrl     : string
+Specify the url for the custom close cursor i.e `"path/to/img.png"`
 
 [*To top*](#table-of-contents)
 
