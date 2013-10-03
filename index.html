@@ -16,22 +16,32 @@
    	</head>
 
     <body>
-
+<div class="box">
     <a href="partials/testOverlay1.html" data-overlay>It should be an overlay</a>
-      <br/>
-    <a href="partials/testOverlay2.html" data-overlay>It should be another overlay</a>
-      <br/>
-    <button href="partials/testOverlay1.html" data-overlay>Overlay in button tag with custom close cursor</button>
-      <br/>
-    <button id="custom-overlay1" href="partials/testOverlay3.html">Overlay with no transition and blue background</button>
-      <br/>
-    <button id="custom-overlay2" href="partials/testOverlay4.html">Overlay with no outside close and custom close button</button>
-      <br/>
-    <button id="custom-overlay3">Load content with custom method</button>
-      <br/>
-    <button id="custom-overlayCB" href="partials/testOverlay1.html">Overlay with callbacks</button>
+</div>
+<div class="box">
+      <a href="partials/testOverlay2.html" data-overlay>It should be another overlay</a>
+</div>
+<div class="box"> 
+  <button class="btn" href="partials/testOverlayCursor.html" data-overlay>Overlay in button tag with custom close cursor</button>
+</div>
+<div class="box">
+  <button class="btn odd" id="custom-overlay1" href="partials/testOverlay3.html">Overlay with no transition and blue background</button>
+</div>
+
+<div class="box">
+  <button class="btn" id="custom-overlay2" href="partials/testOverlay4.html">Overlay with no outside close and custom close button</button>
+</div>
+
+<div class="box">
+  <button class="btn odd" id="custom-overlay3">Load content with custom method</button>
+</div>
+
+<div class="box">
+  <button class="btn" id="custom-overlayCB" href="partials/testOverlay1.html">Overlay with callbacks</button>
+</div>
     	
-    <div id="overlay-content" class="overlay-content">
+    <div id="overlay-content" class="overlay-content box">
       
     </div>
 
