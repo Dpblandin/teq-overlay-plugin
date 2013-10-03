@@ -65,7 +65,8 @@ var teqOverlay = {
 				left      : 0,
 				width     : $(window).width(),
 				height    : $(window).height(),
-				zIndex    : 9999999
+				zIndex    : 9999999,
+				overflowY : "scroll"
 			},
 			overlayTransition  : {
 				type: "show", 
@@ -327,7 +328,7 @@ var teqOverlay = {
 					left : "50%",
 					marginLeft : -this_instance.settings.contentContainer.outerWidth()/2+"px"
 					});
-				});	
+				});
 			}
 		
 };
