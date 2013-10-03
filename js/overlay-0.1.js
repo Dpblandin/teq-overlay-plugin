@@ -105,13 +105,16 @@ var teqOverlay = {
 						this_instance.loadOverlayContent($(this).attr('href'));
 
 						/* Show overlay with specified transitions and then fire afterOpenCB callback */
-						if( this_instance.showOverlayWithTransition($('#'+this_instance.settings.overlayAttrs.ID)) ) {
+						$.when(this_instance.showOverlayWithTransition($('#'+this_instance.settings.overlayAttrs.ID)) )
+						.then(function(){
 
+							this_instance.showContainer();
 							if(typeof this_instance.settings.afterOpenCB == 'function') {
 
 								this_instance.settings.afterOpenCB.call(this_instance);
 							}
-						}	
+						}) 
+
 					}							
 				});
 				window.console.log && console.log('------------DONE---------------');
@@ -181,6 +184,8 @@ var teqOverlay = {
 
 							this_instance.addDocumentEventHandler(); 
 						}
+						/* This is a hack to retrieve container height later on because imanoob */
+						this_instance.settings.contentContainer.tqOuterHeight = this_instance.settings.contentContainer.height();
 						done = true;
 					});
 				}
@@ -292,28 +297,37 @@ var teqOverlay = {
 
 			/* Shows overlay with specified transition effect */
 			showOverlayWithTransition: function ( element ){
-				var done = false;
-				var this_instance = this;
+				var transDone = false;
 					switch (this.settings.overlayTransition.type) {
 
 						case "fadeIn":
 							element.fadeIn(this.settings.overlayTransition.duration, function(){
-								done = true;
+								transDone = true;
 								
 							});
 						break;
 
 						default:
 							element.show(0, function() {
-								done = true;
+								transDone = true;
 							});
 						break;
 						
 					}
 
-				this_instance.settings.contentContainer.show();
-				
-				return done;
+				return transDone;
+			},
+
+			showContainer: function() {
+				var this_instance = this;
+				this.settings.contentContainer.show(0, function(){
+					console.log(this_instance.settings.contentContainer.tqOuterHeight);
+					this_instance.settings.contentContainer.css({
+					/*position: "fixed",*/
+					left : "50%",
+					marginLeft : -this_instance.settings.contentContainer.outerWidth()/2+"px"
+					});
+				});	
 			}
 		
 };
