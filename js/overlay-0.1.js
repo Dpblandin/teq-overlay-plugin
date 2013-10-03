@@ -36,6 +36,7 @@ var teqOverlay = {
 
 				/* If an element is found, add background overlay and bind click events for links */
 				if(this.$element.length > 0){
+					this.settings.contentContainer.hide();
 					this._bindClickEvents();
 					done = !done;
 				}
@@ -70,7 +71,7 @@ var teqOverlay = {
 				type: "show", 
 				duration: 0
 			},
-			contentContainer : $('div#teq-overlay-content'),
+			contentContainer : $('#teq-overlay-content'),
 			addCloseBtn: false,
 			closeBtnAttrs:{
 				ID: 'overlay-close'
@@ -196,7 +197,7 @@ var teqOverlay = {
 
 					for(var i = 0; i < elements.get().length; i++){
 
-						$(elements.get(i)).data("teqOverlay").settings.contentContainer.unwrap().empty();
+						$(elements.get(i)).data("teqOverlay").settings.contentContainer.unwrap().empty().hide();
 					}
 						
 				}
@@ -281,6 +282,7 @@ var teqOverlay = {
 				}
 
 				this.removeDocumentEventHandler();
+				this.cleanContents();
 
 				if(typeof this.settings.afterCloseCB == 'function') {
 
@@ -291,11 +293,13 @@ var teqOverlay = {
 			/* Shows overlay with specified transition effect */
 			showOverlayWithTransition: function ( element ){
 				var done = false;
+				var this_instance = this;
 					switch (this.settings.overlayTransition.type) {
 
 						case "fadeIn":
 							element.fadeIn(this.settings.overlayTransition.duration, function(){
 								done = true;
+								
 							});
 						break;
 
@@ -306,6 +310,8 @@ var teqOverlay = {
 						break;
 						
 					}
+
+				this_instance.settings.contentContainer.show();
 				
 				return done;
 			}
