@@ -86,7 +86,9 @@ var teqOverlay = {
 				type: "hide",
 				duration: 0
 			},
-			closeFromOutside : true
+			closeFromOutside  : true,
+			customCloseCursor : false,
+			closeCursorUrl    : "css/img/close_cross_white-32.png"
 		},
 
 			/* Bind click events to matched elements to show overlay content */
@@ -224,6 +226,10 @@ var teqOverlay = {
 
 			addDocumentEventHandler: function() {
 				var overlayContainer = $("#"+this.settings.overlayAttrs.ID);
+				if(this.settings.customCloseCursor) {
+
+					this.addCloseCursor(overlayContainer);
+				}
 				$(document).bind("click.outsideClickEvent", this.outsideCloseHandler(overlayContainer));
 						
 			},
@@ -248,6 +254,12 @@ var teqOverlay = {
 					e.preventDefault();
 					this_instance.hideElementWithTransition(overlayContainer, this_instance.settings.closeTransition);
 				}
+			},
+
+			/* Adds a custom close cursor pointer */
+			addCloseCursor: function(overlayContainer){
+				this.settings.contentContainer.css({ cursor: "default" });
+				overlayContainer.css({ cursor: 'url('+this.settings.closeCursorUrl+'), default' });
 			},
 
 			/* Hides an element with specified transition effect */

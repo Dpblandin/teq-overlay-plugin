@@ -21,7 +21,7 @@
       <br>
     <a href="partials/testOverlay2.html" data-overlay>It should be another overlay</a>
       <br>
-    <button href="partials/testOverlay1.html" data-overlay>And another overlay in button tag</button>
+    <button href="partials/testOverlay1.html" data-overlay>Overlay in button tag with custom close cursor</button>
       <br>
     <button id="custom-overlay1" href="partials/testOverlay3.html">Overlay with no transition and blue background</button>
       <br>
@@ -44,11 +44,7 @@
 	 <script src="js/overlay-0.1.js"></script>
 
    <script>
-    $('[data-overlay]').teqOverlay({
-      beforeOpenCB: function(){
-        console.log(this);
-      },
-
+    $('a[data-overlay]').teqOverlay({
       overlayCSS:{},
       overlayTransition : {type: "fadeIn", duration:750},
       contentContainer: $('#overlay-content'),
@@ -56,10 +52,16 @@
       closeTransition: {type:"fadeOut", duration:750}
     });
 
+    $('button[data-overlay]').teqOverlay({
+      contentContainer: $('#overlay-content'),
+      addCloseBtn : true,
+      customCloseCursor : true
+    });
+
     $('#custom-overlay1').teqOverlay({
       overlayCSS:{background: "rgba(0,100,255, .8)"},
       contentContainer: $('#overlay-content'),
-      addCloseBtn : true
+      addCloseBtn : true,
     });
 
     $('#custom-overlay2').teqOverlay({
