@@ -18,17 +18,17 @@
     <body>
 
     <a href="partials/testOverlay1.html" data-overlay>It should be an overlay</a>
-      <br>
+      <br/>
     <a href="partials/testOverlay2.html" data-overlay>It should be another overlay</a>
-      <br>
+      <br/>
     <button href="partials/testOverlay1.html" data-overlay>Overlay in button tag with custom close cursor</button>
-      <br>
+      <br/>
     <button id="custom-overlay1" href="partials/testOverlay3.html">Overlay with no transition and blue background</button>
-      <br>
+      <br/>
     <button id="custom-overlay2" href="partials/testOverlay4.html">Overlay with no outside close and custom close button</button>
-      <br>
+      <br/>
     <button id="custom-overlay3">Load content with custom method</button>
-      <br>
+      <br/>
     <button id="custom-overlayCB" href="partials/testOverlay1.html">Overlay with callbacks</button>
     	
     <div id="overlay-content" class="overlay-content">
@@ -61,7 +61,7 @@
     $('#custom-overlay1').teqOverlay({
       overlayCSS:{background: "rgba(0,100,255, .8)"},
       contentContainer: $('#overlay-content'),
-      addCloseBtn : true,
+      addCloseBtn : true
     });
 
     $('#custom-overlay2').teqOverlay({
