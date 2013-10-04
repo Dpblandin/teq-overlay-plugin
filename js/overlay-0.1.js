@@ -250,7 +250,10 @@ var teqOverlay = {
 				return function(e) {
 					e.stopPropagation();
 					e.preventDefault();
-					this_instance.hideElementWithTransition(overlayContainer, this_instance.settings.closeTransition);
+					this_instance.hideElementWithTransition(overlayContainer, this_instance.settings.closeTransition)
+					 .then(function(){
+					 	this_instance.cleanContents();
+					 });
 				}
 			},
 			closeButtonHandler: function (overlayContainer){
@@ -258,7 +261,10 @@ var teqOverlay = {
 				return function(e) {
 					e.stopPropagation();
 					e.preventDefault();
-					this_instance.hideElementWithTransition(overlayContainer, this_instance.settings.closeTransition);
+					this_instance.hideElementWithTransition(overlayContainer, this_instance.settings.closeTransition)
+					 .then(function(){
+					 	this_instance.cleanContents();
+					 })
 				}
 			},
 
@@ -274,25 +280,33 @@ var teqOverlay = {
 
 					this.settings.beforeCloseCB.call(this);
 				}
+
+				var dfd = $.Deferred();
+
 				switch (transition.type) {
 
 						case "fadeOut":
-							element.fadeOut(transition.duration);
+							element.fadeOut(transition.duration, function(){
+								dfd.resolve("success");
+							});
 						break;
 
 						default:
-							element.hide();
+							element.hide(0, function(){
+								dfd.resolve("success");
+							});
 						break;
 						
 				}
 
 				this.removeDocumentEventHandler();
-				this.cleanContents();
 
 				if(typeof this.settings.afterCloseCB == 'function') {
 
 					this.settings.afterCloseCB.call(this);
 				}
+
+				return dfd.promise();
 			},
 
 			/* Shows overlay with specified transition effect */
