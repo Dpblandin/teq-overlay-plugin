@@ -103,19 +103,19 @@ var teqOverlay = {
 					/* Add overlay to DOM and return true if all is good */
 					if(this_instance.addOverlayToStage()) {
 						/* Pass href element attribute to loading method */
-						this_instance.loadOverlayContent($(this).attr('href'));
+						this_instance.loadOverlayContent($(this).attr('href'))
+						 .then(function() {
+						 	/* Show overlay with specified transitions and then fire afterOpenCB callback */
+							this_instance.showOverlayWithTransition($('#'+this_instance.settings.overlayAttrs.ID))
+							.then(function(resp){
+								console.log(resp);
+								this_instance.showContainer();
+								if(typeof this_instance.settings.afterOpenCB == 'function') {
 
-						/* Show overlay with specified transitions and then fire afterOpenCB callback */
-						$.when(this_instance.showOverlayWithTransition($('#'+this_instance.settings.overlayAttrs.ID)) )
-						.then(function(){
-
-							this_instance.showContainer();
-							if(typeof this_instance.settings.afterOpenCB == 'function') {
-
-								this_instance.settings.afterOpenCB.call(this_instance);
-							}
-						}) 
-
+									this_instance.settings.afterOpenCB.call(this_instance);
+								}
+							}) 
+						 })
 					}							
 				});
 				window.console.log && console.log('------------DONE---------------');
@@ -153,7 +153,7 @@ var teqOverlay = {
 			/* Load overlay content into content container, checks wether to add a close button or not */
 			loadOverlayContent: function( hrefLink ) {
 				var this_instance = this;
-				var done = false;
+				var dfd = $.Deferred();
 				if(typeof this_instance.settings.beforeOpenCB == 'function') {
 
 					this_instance.settings.beforeOpenCB.call(this_instance);
@@ -172,7 +172,7 @@ var teqOverlay = {
 						this_instance.addDocumentEventHandler(); 
 					}
 
-					done = true;
+					dfd.resolve("success");
 
 				}
 				else {
@@ -185,11 +185,11 @@ var teqOverlay = {
 
 							this_instance.addDocumentEventHandler(); 
 						}
-						/* This is a hack to retrieve container height later on because imanoob */
-						this_instance.settings.contentContainer.tqOuterHeight = this_instance.settings.contentContainer.height();
-						done = true;
+						dfd.resolve("success");
 					});
 				}
+
+				return dfd.promise();
 
 				window.console.log && console.log('------------DONE---------------');
 			},
@@ -298,35 +298,36 @@ var teqOverlay = {
 
 			/* Shows overlay with specified transition effect */
 			showOverlayWithTransition: function ( element ){
-				var transDone = false;
+				var dfd = $.Deferred();
 					switch (this.settings.overlayTransition.type) {
 
 						case "fadeIn":
 							element.fadeIn(this.settings.overlayTransition.duration, function(){
-								transDone = true;
+								dfd.resolve("success");
 								
 							});
 						break;
 
 						default:
 							element.show(0, function() {
-								transDone = true;
+								dfd.resolve("success")
 							});
 						break;
 						
 					}
 
-				return transDone;
+				return dfd.promise();
 			},
 
 			showContainer: function() {
 				var this_instance = this;
 				this.settings.contentContainer.show(0, function(){
-					console.log(this_instance.settings.contentContainer.tqOuterHeight);
 					this_instance.settings.contentContainer.css({
-					/*position: "fixed",*/
+					position: "fixed",
 					left : "50%",
-					marginLeft : -this_instance.settings.contentContainer.outerWidth()/2+"px"
+					marginLeft : -this_instance.settings.contentContainer.outerWidth()/2+"px",
+					top  : "50%",
+					marginTop  : -this_instance.settings.contentContainer.outerHeight()/2+"px"
 					});
 				});
 			}
