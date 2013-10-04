@@ -32,8 +32,10 @@ body{
 	padding: 25px;
 	display: block;
 	color:#fff;
+	margin:10px;
 
 }
+
 
 a, button.btn {
 	color:#fff;
