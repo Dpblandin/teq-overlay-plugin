@@ -107,8 +107,7 @@ var teqOverlay = {
 						 .then(function() {
 						 	/* Show overlay with specified transitions and then fire afterOpenCB callback */
 							this_instance.showOverlayWithTransition($('#'+this_instance.settings.overlayAttrs.ID))
-							.then(function(resp){
-								console.log(resp);
+							.then(function(){
 								this_instance.showContainer();
 								if(typeof this_instance.settings.afterOpenCB == 'function') {
 
@@ -163,7 +162,9 @@ var teqOverlay = {
 
 				if(typeof this_instance.settings.loadContent === 'function') {
 					
-					this_instance.settings.loadContent();
+					$.when(this_instance.settings.loadContent()).then(function() {
+						dfd.resolve("success");
+					});
 
 					if(this_instance.settings.addCloseBtn) {
 						this_instance.addCloseButton();	
@@ -171,8 +172,6 @@ var teqOverlay = {
 					if(this_instance.settings.closeFromOutside) {
 						this_instance.addDocumentEventHandler(); 
 					}
-
-					dfd.resolve("success");
 
 				}
 				else {
