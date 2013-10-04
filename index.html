@@ -42,6 +42,10 @@
 <div class="box">
   <button class="btn" id="custom-overlayCB" href="partials/testOverlay1.html">Overlay with callbacks</button>
 </div>
+
+<div class="box">
+  <button class="btn odd" id="custom-overlay4" href="partials/testOverlayLong.html">Overlay with long content</button>
+</div>
     	
     <div id="overlay-content" class="overlay-content box">
       
@@ -110,6 +114,12 @@
       },
       contentContainer: $('#overlay-content'),
       addCloseBtn: true
+    });
+
+   $('#custom-overlay4').teqOverlay({
+      contentContainer: $('#overlay-content'),
+      addCloseBtn: true,
+      customCloseCursor: true
     });
 
    </script>

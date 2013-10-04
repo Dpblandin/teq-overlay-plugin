@@ -65,8 +65,7 @@ var teqOverlay = {
 				left      : 0,
 				width     : $(window).width(),
 				height    : $(window).height(),
-				zIndex    : 9999999,
-				overflowY : "scroll"
+				zIndex    : 9999999
 			},
 			overlayTransition  : {
 				type: "show", 
