@@ -167,7 +167,27 @@ If you wish to use your own method for loading content, you can pass the `loadCo
 	       
 	});
 
-Please note that as of yet, `jQuery.load()` is not fully supported and may produce unwanted behaviours.
+__IMPORTANT__ : If you use async loading methods such as `jQuery.get` and the likes to retrieve your content, you should create a jQuery Deferred, resolve it after the success callback, and then return the promise. This is to ensure that internal methods from the plug in are fired at the right time so its objects properties are not lost at some point.
+For example :
+
+	$("myselector").teqOverlay({
+		//optional params ...
+		loadContent : function(){
+			var d = $.Deferred(); // Step1: Create the Deferred object
+			
+			$.get("something", function(){
+
+				// Your success callback logic here
+
+				d.resolve();     // Step2 : resolve the Deferred object at the end of the callback
+			});
+
+			return d.promise(); //  Step3 : return the Deferred object's promise;
+		}
+	       
+	});
+
+Please also note that as of yet, `jQuery.load()` is not fully supported and may produce unwanted behaviours.
 
 [*To top*](#table-of-contents)
 
