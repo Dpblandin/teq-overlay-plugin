@@ -180,15 +180,14 @@ var teqOverlay = {
 
 				if(typeof this_instance.settings.loadContent === 'function') {
 					$.when(this_instance.settings.loadContent()).then(function() {
+						if(this_instance.settings.addCloseBtn) {
+							this_instance.addCloseButton();	
+						}
+						if(this_instance.settings.closeFromOutside) {
+							this_instance.addDocumentEventHandler(); 
+						}
 						dfd.resolve();
 					});
-
-					if(this_instance.settings.addCloseBtn) {
-						this_instance.addCloseButton();	
-					}
-					if(this_instance.settings.closeFromOutside) {
-						this_instance.addDocumentEventHandler(); 
-					}
 
 				}
 				else {
