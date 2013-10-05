@@ -37,6 +37,7 @@ var teqOverlay = {
 				/* If an element is found, add background overlay and bind click events for links */
 				if(this.$element.length > 0){
 					this.settings.contentContainer.hide();
+					this._pollWinResize();
 					this._bindClickEvents();
 					done = !done;
 				}
@@ -63,8 +64,8 @@ var teqOverlay = {
 				position  : "fixed",
 				top       : 0,
 				left      : 0,
-				width     : $(window).width(),
-				height    : $(window).height(),
+				width     : window.innerWidth,
+				height    : window.innerHeight,
 				zIndex    : 9999999
 			},
 			overlayTransition  : {
@@ -91,9 +92,27 @@ var teqOverlay = {
 			customCloseCursor : false,
 			closeCursorUrl    : "css/img/close_cross_white-32.png"
 		},
+			/* Watch window resizing */
+			_pollWinResize: function() {
+				var this_instance = this;
+				$(window).resize(function() {
+					this_instance._resizeOverlay();
+				});
+			},
+
+			/* Resize overlay if necessary*/
+			_resizeOverlay: function() {
+				if(this.settings.contentContainer.parents("#"+this.settings.overlayAttrs.ID).length > 0) {
+					var w = window.innerWidth;
+					var h = window.innerHeight;
+					this.settings.contentContainer.parents("#"+this.settings.overlayAttrs.ID)
+					 .width(w)
+					 .height(h);
+				}
+			},
 
 			/* Bind click events to matched elements to show overlay content */
-			_bindClickEvents: function(){
+			_bindClickEvents: function() {
 				window.console.log && console.log('binding click events...');
 				var this_instance = this;
 				this.$element.bind("click", function(e) {
@@ -120,7 +139,7 @@ var teqOverlay = {
 			},
 
 			/* Add background overlay */
-			addOverlayToStage: function(){
+			addOverlayToStage: function() {
 				window.console.log && console.log('Adding overlay to stage...');
 				window.console.log && console.log(this);
 				
@@ -140,7 +159,7 @@ var teqOverlay = {
 				}else {
 
 					this.settings.contentContainer.parents("#"+this.settings.overlayAttrs.ID).css(this.settings.overlayCSS)
-					.done(function(){isDone = true});
+					.done(function(){this._resizeOverlay(); isDone = true});
 				}
 
 				return isDone;
