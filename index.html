@@ -90,9 +90,13 @@
     //Call plugin with custom load content method
    $('#custom-overlay3').teqOverlay({
       loadContent : function(){
+        var d = $.Deferred();
        $.get('partials/testOverlayCustom.html',function(html){
           $(html).appendTo('#custom-overlay-content');
+          d.resolve();
        });
+
+       return d.promise();
       },
       contentContainer: $('#custom-overlay-content'),
       addCloseBtn: true

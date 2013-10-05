@@ -12,7 +12,7 @@ var teqOverlay = {
 
 			afterCloseCB: function(){},
 
-			loadContent: function(){},
+			loadContent: function(args){},
 
 			/* Init method */
 			init: function(options, element){
@@ -179,7 +179,6 @@ var teqOverlay = {
 				
 
 				if(typeof this_instance.settings.loadContent === 'function') {
-					
 					$.when(this_instance.settings.loadContent()).then(function() {
 						dfd.resolve("success");
 					});
