@@ -180,7 +180,7 @@ var teqOverlay = {
 
 				if(typeof this_instance.settings.loadContent === 'function') {
 					$.when(this_instance.settings.loadContent()).then(function() {
-						dfd.resolve("success");
+						dfd.resolve();
 					});
 
 					if(this_instance.settings.addCloseBtn) {
@@ -201,7 +201,7 @@ var teqOverlay = {
 
 							this_instance.addDocumentEventHandler(); 
 						}
-						dfd.resolve("success");
+						dfd.resolve();
 					});
 				}
 
@@ -304,13 +304,13 @@ var teqOverlay = {
 
 						case "fadeOut":
 							element.fadeOut(transition.duration, function(){
-								dfd.resolve("success");
+								dfd.resolve();
 							});
 						break;
 
 						default:
 							element.hide(0, function(){
-								dfd.resolve("success");
+								dfd.resolve();
 							});
 						break;
 						
@@ -333,14 +333,14 @@ var teqOverlay = {
 
 						case "fadeIn":
 							element.fadeIn(this.settings.overlayTransition.duration, function(){
-								dfd.resolve("success");
+								dfd.resolve();
 								
 							});
 						break;
 
 						default:
 							element.show(0, function() {
-								dfd.resolve("success")
+								dfd.resolve()
 							});
 						break;
 						
