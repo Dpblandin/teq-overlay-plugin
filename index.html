@@ -8,6 +8,11 @@
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
+<<<<<<< HEAD
+=======
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700' rel='stylesheet' type='text/css'>
+
+>>>>>>> origin/dev
         <link rel="stylesheet" href="css/teq-overlay.css" />
 
 	   <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -16,6 +21,7 @@
    	</head>
 
     <body>
+<<<<<<< HEAD
 
     <a href="partials/testOverlay1.html" data-overlay>It should be an overlay</a>
       <br>
@@ -32,6 +38,38 @@
     <button id="custom-overlayCB" href="partials/testOverlay1.html">Overlay with callbacks</button>
     	
     <div id="overlay-content" class="overlay-content">
+=======
+<div class="box">
+    <a href="partials/testOverlay1.html" data-overlay>It should be an overlay with transitions</a>
+</div>
+<div class="box">
+      <a href="partials/testOverlay2.html" data-overlay>It should be another overlay with transitions</a>
+</div>
+<div class="box"> 
+  <button class="btn" href="partials/testOverlayCursor.html" data-overlay>Overlay in button tag with custom close cursor</button>
+</div>
+<div class="box">
+  <button class="btn odd" id="custom-overlay1" href="partials/testOverlay3.html">Overlay with no transition and blue background</button>
+</div>
+
+<div class="box">
+  <button class="btn" id="custom-overlay2" href="partials/testOverlay4.html">Overlay with no outside close and custom close button</button>
+</div>
+
+<div class="box">
+  <button class="btn odd" id="custom-overlay3">Load content with custom method</button>
+</div>
+
+<div class="box">
+  <button class="btn" id="custom-overlayCB" href="partials/testOverlay1.html">Overlay with callbacks</button>
+</div>
+
+<div class="box">
+  <button class="btn odd" id="custom-overlay4" href="partials/testOverlayLong.html">Overlay with long content</button>
+</div>
+    	
+    <div id="overlay-content" class="overlay-content box">
+>>>>>>> origin/dev
       
     </div>
 
@@ -44,11 +82,15 @@
 	 <script src="js/overlay-0.1.js"></script>
 
    <script>
+<<<<<<< HEAD
     $('[data-overlay]').teqOverlay({
       beforeOpenCB: function(){
         console.log(this);
       },
 
+=======
+    $('a[data-overlay]').teqOverlay({
+>>>>>>> origin/dev
       overlayCSS:{},
       overlayTransition : {type: "fadeIn", duration:750},
       contentContainer: $('#overlay-content'),
@@ -56,6 +98,15 @@
       closeTransition: {type:"fadeOut", duration:750}
     });
 
+<<<<<<< HEAD
+=======
+    $('button[data-overlay]').teqOverlay({
+      contentContainer: $('#overlay-content'),
+      addCloseBtn : true,
+      customCloseCursor : true
+    });
+
+>>>>>>> origin/dev
     $('#custom-overlay1').teqOverlay({
       overlayCSS:{background: "rgba(0,100,255, .8)"},
       contentContainer: $('#overlay-content'),
@@ -98,6 +149,15 @@
       addCloseBtn: true
     });
 
+<<<<<<< HEAD
+=======
+   $('#custom-overlay4').teqOverlay({
+      contentContainer: $('#overlay-content'),
+      addCloseBtn: true,
+      customCloseCursor: true
+    });
+
+>>>>>>> origin/dev
    </script>
 
 </html>

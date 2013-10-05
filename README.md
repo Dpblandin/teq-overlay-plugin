@@ -63,8 +63,19 @@ Html content of the close button element
 	}
 Add a jQuery transition effect for the close event (fadeOut only currently supported)
 
+<<<<<<< HEAD
 	closeFromOutside : boolean
 If set to false, will disable the closing of the overlay by clicking anywhere outside of it
+=======
+	closeFromOutside   : boolean
+If set to false, will disable the closing of the overlay by clicking anywhere outside of it
+	
+	customCloseCursor  : boolean
+If set to true, will add a custom close cursor that will appear when hovering outside the content container 
+
+	closeCursorUrl     : string
+Specify the url for the custom close cursor i.e `"path/to/img.png"`
+>>>>>>> origin/dev
 
 [*To top*](#table-of-contents)
 
@@ -115,7 +126,11 @@ Callbacks
 When calling the plugin, you can pass any of the following callback methods :
 
 * `beforeOpenCB`  : called *before* the overlay opens
+<<<<<<< HEAD
 * `afterOpenCB`   : called *after* the overlay and it's content is loaded
+=======
+* `afterOpenCB`   : called *after* the overlay and its content is loaded
+>>>>>>> origin/dev
 * `beforeCloseCB` : called *before* the overlay closes
 * `afterCloseCB`  : called *after* the overlay is closed
 

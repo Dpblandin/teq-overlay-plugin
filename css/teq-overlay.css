@@ -1,6 +1,83 @@
+<<<<<<< HEAD
 .overlay-content, #custom-overlay-content {
 	background:#FFF;
 	position:relative;
 	width: 60%;
 	margin-left: 15%;
 }
+=======
+*,
+*:before,
+*:after {
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box; }
+
+body{
+	background-color: #1f253d;
+}
+
+.overlay-content, #custom-overlay-content {
+	margin-top:50px;
+	position: relative;
+	width: 600px;
+	max-height: 400px;
+	overflow-y: auto;
+}
+
+#custom-overlay-content{
+	background: #fff;
+	width: 700px;
+}
+
+/* BOX */
+
+.box {
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	background-color: #394163; 
+	text-align: center;
+	padding: 25px;
+	display: block;
+	color:#fff;
+	margin:10px;
+	font-family: "Ubuntu";
+
+}
+
+
+a, button.btn {
+	color:#fff;
+	font-size: 24px;
+	text-decoration: none;
+}
+
+a:hover {
+	color:#cc324b;
+}
+
+/* BTN */
+
+.btn {
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px; /* border radius */
+	background-color: #11a7ab; /* layer fill content */
+	cursor: pointer;
+	border: none;
+	padding: 10px
+}
+
+.btn.odd{
+	background-color: #e64c65;
+}
+
+.btn:hover{
+	background-color: #0da0a3;
+}
+
+.btn.odd:hover{
+	background-color: #cc324b;
+}
+>>>>>>> origin/dev
